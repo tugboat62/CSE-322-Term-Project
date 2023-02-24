@@ -1,0 +1,7 @@
+Adjusting the threshold values: In TCP Vegas, the congestion window size (cwnd) is adjusted based on the current value of the RTT (round-trip time) and the difference between the estimated and actual throughput. You can modify the threshold values for these parameters to change how quickly or slowly the congestion window size is adjusted. For example, increasing the threshold for the RTT can reduce the window fluctuations but might result in longer periods of low throughput.
+
+Changing the congestion detection mechanism: TCP Vegas uses a different mechanism to detect congestion than other TCP variants. You can experiment with different congestion detection mechanisms to see how they affect the performance. For example, you could replace the Vegas algorithm with the TCP Reno or TCP NewReno algorithm.
+
+Modifying the congestion avoidance algorithm: TCP Vegas uses a linear growth function to increase the congestion window size, which can lead to under-utilization of the network. You could modify the algorithm to use a non-linear function that allows for more aggressive growth. However, this could also result in over-utilization of the network and cause packet loss.
+
+Adjusting the packet drop threshold: In TCP Vegas, the congestion window size is reduced if a packet is dropped. You could adjust the threshold at which a packet is dropped to make the congestion window size more or less sensitive to packet loss.
