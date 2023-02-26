@@ -46,8 +46,8 @@ if { $argc == 5 } {
     puts "inside arguments"
     set val(nn)   [lindex $argv 0]
     set val(nf)   [lindex $argv 1]
-    set val(rate)  [lindex $argv 2]
-    set val(tx_range)  [lindex $argv 3]
+    set val(speed) [lindex $argv 2]
+    set val(rate)  [lindex $argv 3]
     set val(congestion_control)  [lindex $argv 4]
 }
 
@@ -185,7 +185,8 @@ for {set i 0} {$i < $val(nf)} {incr i} {
     # attach to agent
     $ftp attach-agent $tcp
     $ftp set type_ FTP
-    $ftp set rate_ $val(rate)*$val(packet_size)    
+    $ftp set maxpkts_ $val(rate)
+    # $ftp set rate_ $val(rate)*$val(packet_size)    
     
     # start traffic generation
     $ns at 1.0 "$ftp start"

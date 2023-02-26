@@ -25,17 +25,17 @@ while True:
         sums[i] += float(params[2+i])
 
 for i in range(7):
-    print(sums[i])
-    print(count)
+    # print(sums[i])
+    # print(count)
     sums[i] /= count
 line = mesType + ' ' + str(size) + ' '
 for i in range(7):
     if i == 6:
-        line += str(sums[i])
+        line += str(sums[i]) + '\n'
     else:
         line += str(sums[i]) + ' '
 
-print(line)
+# print(line)
 
 file1.write(line)
 file1.close()

@@ -18,7 +18,7 @@ nodes = [20, 40, 60, 80, 100]
 flows = [10, 20, 30, 40, 50]
 packets_per_sec = [100, 200, 300, 400, 500]
 node_speed = [5, 10, 15, 20, 25]
-tx_range = [100, 200, 300, 400, 500]
+tx_range = [1, 2, 3, 4, 5]
 
 nodesTp = []
 nodesAd = []
@@ -321,7 +321,7 @@ for i in range(len(nodesList)):
     # Y_ = X_Y_Spline(X_)
     plt.plot(x, y, color='r', label='new', linestyle='dashed')
     plt.plot(x, z, color='g', label='old', linestyle='dashed')
-    plt.plot(x, w, color='b', label='reno', linestyle='dashed')
+    # plt.plot(x, w, color='b', label='reno', linestyle='dashed')
     plt.xlabel('nodes')
     if i == 0:
         plt.ylabel('Throughput')
@@ -336,6 +336,7 @@ for i in range(len(nodesList)):
     elif i == 5:
         plt.ylabel('Throughput per node')
     elif i == 6:
+        plt.plot(x, w, color='b', label='reno', linestyle='dashed')
         plt.ylabel('Fairness Index')
     plt.title("nodes vs metrics")
     plt.legend(loc='best')
@@ -351,7 +352,7 @@ for i in range(len(flowsList)):
     # Y_ = X_Y_Spline(X_)
     plt.plot(x, y, color='r', label='new', linestyle='dashed')
     plt.plot(x, z, color='g', label='old', linestyle='dashed')
-    plt.plot(x, w, color='b', label='reno', linestyle='dashed')
+    # plt.plot(x, w, color='b', label='reno', linestyle='dashed')
     plt.xlabel('flows')
     if i == 0:
         plt.ylabel('Throughput')
@@ -366,6 +367,7 @@ for i in range(len(flowsList)):
     elif i == 5:
         plt.ylabel('Throughput per node')
     elif i == 6:
+        plt.plot(x, w, color='b', label='reno', linestyle='dashed')
         plt.ylabel('Fairness Index')
     plt.title("flows vs metrics")
     plt.legend(loc='best')
@@ -381,7 +383,7 @@ for i in range(len(rateList)):
     # Y_ = X_Y_Spline(X_)
     plt.plot(x, y, color='r', label='new', linestyle='dashed')
     plt.plot(x, z, color='g', label='old', linestyle='dashed')
-    plt.plot(x, w, color='b', label='reno', linestyle='dashed')
+    # plt.plot(x, w, color='b', label='reno', linestyle='dashed')
     plt.xlabel('packets per second')
     if i == 0:
         plt.ylabel('Throughput')
@@ -396,6 +398,7 @@ for i in range(len(rateList)):
     elif i == 5:
         plt.ylabel('Throughput per node')
     elif i == 6:
+        plt.plot(x, w, color='b', label='reno', linestyle='dashed')
         plt.ylabel('Fairness Index')
     plt.title("packets per second vs metrics")
     plt.legend(loc='best')
@@ -412,7 +415,7 @@ if file_name == 'data.txt' and file_name2 == 'data_prev.txt':
         # Y_ = X_Y_Spline(X_)
         plt.plot(x, y, color='r', label='new', linestyle='dashed')
         plt.plot(x, z, color='g', label='old', linestyle='dashed')
-        plt.plot(x, w, color='b', label='reno', linestyle='dashed')
+        # plt.plot(x, w, color='b', label='reno', linestyle='dashed')
         plt.xlabel('node speed')
         if i == 0:
             plt.ylabel('Throughput')
@@ -427,6 +430,7 @@ if file_name == 'data.txt' and file_name2 == 'data_prev.txt':
         elif i == 5:
             plt.ylabel('Throughput per node')
         elif i == 6:
+            plt.plot(x, w, color='b', label='reno', linestyle='dashed')
             plt.ylabel('Fairness Index')
         plt.title("node speed vs metrics")
         plt.legend(loc='best')
@@ -443,7 +447,7 @@ if file_name == 'data2.txt' and file_name2 == 'data_prev2.txt':
         # Y_ = X_Y_Spline(X_)
         plt.plot(x, y, color='r', label='new', linestyle='dashed')
         plt.plot(x, z, color='g', label='old', linestyle='dashed')
-        plt.plot(x, w, color='b', label='reno', linestyle='dashed')
+        # plt.plot(x, w, color='b', label='reno', linestyle='dashed')
         plt.xlabel('transmission range')
         if i == 0:
             plt.ylabel('Throughput')
@@ -458,6 +462,7 @@ if file_name == 'data2.txt' and file_name2 == 'data_prev2.txt':
         elif i == 5:
             plt.ylabel('Throughput per node')
         elif i == 6:
+            plt.plot(x, w, color='b', label='reno', linestyle='dashed')
             plt.ylabel('Fairness Index')
         plt.title("transmission range vs metrics")
         plt.legend(loc='best')

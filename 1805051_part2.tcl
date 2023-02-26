@@ -19,10 +19,10 @@ set val(nf)                         20                    ;# number of flows
 set val(grid)                       500                   ;# grid size 
 set val(rate)                       250                   ;# packets per second 
 set val(packet_size)                1000                  ;# packet size in bytes
-set val(tx_range)                   250                   ;# transmission range in meters
 set val(energymodel)                EnergyModel           ;# Energy set up
 set val(initialenergy)              20.0                  ;# Initial energy
 set val(congestion_control)         Vegas                 ;# congestion control
+set val(coefficientOfTX)            1.0                   ;# coefficient of TX      
 # set val(energymodel_15)             EnergyModel           ;# Energy set up
 # set val(initialenergy_15)           300.0                  ;# Initial energy
 # set val(idlepower_15)               40                    ;# LEAP (802.11g)
@@ -30,6 +30,35 @@ set val(congestion_control)         Vegas                 ;# congestion control
 # set val(txpower_15)                 75                    ;# LEAP (802.11g)
 # set val(sleeppower_15)              40                    ;# LEAP (802.11g)
 # =======================================================================
+# take arguments from command line
+if { $argc == 4 } {
+    puts "inside arguments"
+    set val(nn)   [lindex $argv 0]
+    set val(nf)   [lindex $argv 1]
+    set val(rate)  [lindex $argv 2]
+    set val(coefficientOfTX)  [lindex $argv 3]
+}
+
+if { $argc == 5 } {
+    puts "inside arguments"
+    set val(nn)   [lindex $argv 0]
+    set val(nf)   [lindex $argv 1]
+    set val(rate)  [lindex $argv 2]
+    set val(coefficientOfTX)  [lindex $argv 3]
+    set val(congestion_control)  [lindex $argv 4]
+}
+
+# set nowValue  [Phy/WirelessPhy set Pt_]            
+# set newValue_Pt  [expr $val(coefficientOfTX) * $val(coefficientOfTX) * $nowValue]
+# Phy/WirelessPhy set Pt_  $newValue_Pt;
+
+Phy/WirelessPhy set CPThresh_ 100.0
+Phy/WirelessPhy set CSThresh_ 4.21756e-11 ;#transmission range
+Phy/WirelessPhy set RXThresh_ 4.4613e-10 ;#transmission range
+Phy/WirelessPhy set bandwidth_ 512kb
+Phy/WirelessPhy set Pt_ [expr { 0.2818 * $val(coefficientOfTX) }]
+Phy/WirelessPhy set freq_ 2.4e+9
+Phy/WirelessPhy set L_ 1.0 
 
 # trace file
 set trace_file [open trace2.tr w]
@@ -40,23 +69,6 @@ $ns trace-all $trace_file
 # nam file
 set nam_file [open animation2.nam w]
 
-# take arguments from command line
-if { $argc == 4 } {
-    puts "inside arguments"
-    set val(nn)   [lindex $argv 0]
-    set val(nf)   [lindex $argv 1]
-    set val(rate)  [lindex $argv 2]
-    set val(tx_range)  [lindex $argv 3]
-}
-
-if { $argc == 5 } {
-    puts "inside arguments"
-    set val(nn)   [lindex $argv 0]
-    set val(nf)   [lindex $argv 1]
-    set val(rate)  [lindex $argv 2]
-    set val(tx_range)  [lindex $argv 3]
-    set val(congestion_control)  [lindex $argv 4]
-}
 
 $ns namtrace-all-wireless $nam_file $val(grid) $val(grid)
 
@@ -138,7 +150,7 @@ for {set i 0} {$i < $val(nn) } {incr i} {
     $node($i) set X_ $xx
     $node($i) set Y_ $yy
     $node($i) set Z_ 0.0
-    $node($i) set tx_range_ $val(tx_range)
+    # $node($i) set tx_range_ $val(tx_range)
     set nodes($xx,$yy) 1
 
     $ns initial_node_pos $node($i) 20
@@ -195,13 +207,16 @@ for {set i 0} {$i < $val(nf)} {incr i} {
     # connect agents
     $ns connect $tcp $tcp_sink
     $tcp set fid_ $i
+    # $tcp set maxseq_ $val(rate)
 
     # Traffic generator
     set ftp [new Application/FTP]
     # attach to agent
     $ftp attach-agent $tcp
     $ftp set type_ FTP
-    $ftp set rate_ $val(rate)*$val(packet_size)
+    $ftp set maxpkts_ $val(rate)
+    
+    # $ftp set rate_ $val(rate)*$val(packet_size)
     
     # start traffic generation
     $ns at 1.0 "$ftp start"
